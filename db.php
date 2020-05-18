@@ -16,5 +16,8 @@
         public function run() {
             printf("Running the migration files. \n");
         }
+        public function add_row() {
+            printf("Creating the migration row in the table. \n");
+        }
     }
 ?>
