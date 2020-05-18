@@ -11,8 +11,10 @@
                 case 'purge' : printf("Purging the database.\n");
                 break;
                 case 'create' : printf("Creating the migration file.\n");
-                echo(date("yymdHis"));
+                $currentdate = date("yymdHis");
+                echo($currentdate);
                 echo "\n"; 
+                $this->add_row($currentdate);
                 break;
                 case 'run': $this->run();
                 break;
