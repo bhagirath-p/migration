@@ -1,9 +1,6 @@
 <?php
+    $dbConnection = new PDO('mysql:host=localhost;dbname=test', 'test', 'test1234');
     class DBClass {
-        private $username = "test";
-        private $password = "test1234";
-        private $database = "test";
-        private $port     = "3306";
         function __construct() {
             // Standard Constructor
         }
