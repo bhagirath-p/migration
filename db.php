@@ -61,30 +61,19 @@
             $sql = "SELECT migrations FROM `migrations` ORDER BY migrations DESC LIMIT 1;";
             $result = $db_connection->query($sql)->fetch();
             if($result) {
-                $files = scandir('migrations');
-                foreach ($files as $file) {
-                    var_dump($file);
-                    var_dump($result[0]);
-                    if (strpos($result[0], $file) !== false) {
-                        // Fetch contents of the fetch and run it.
-                        ob_start(); // Start output buffer capture.
-                        include($file); // Include file.
-                        $output = ob_get_contents(); // This contains the output
-                        // Manipulate $output...
-                        ob_end_clean(); // Clear the buffer.
-                        echo $output; // Print everything.
-                        $revert_result = $db_connection->query($bad_sql)->execute();
-                        if($revert_result) {
-                            $sql = "DELETE FROM `migrations` WHERE `migrations` LIKE '%$result[0]%'";
-                            $result = $db_connection->query($sql)->execute();
-                            printf("Reverted the changes by one level");
-                        }
-                        else {
-                            printf("Unable to revert");
-                        }
-                        break;
-                    }
-                }
+                //$files = scandir('migrations');
+                $files = glob('migrations/'.$result[0].'*'); // get the file
+                // Fetch contents of the fetch and run it.
+                ob_start(); // Start output buffer capture.
+                include($files[0]); // Include file.
+                $output = ob_get_contents(); // This contains the output
+                // Manipulate $output...
+                ob_end_clean(); // Clear the buffer.
+                echo $output; // Print everything.
+                $revert_result = $db_connection->query($bad_sql)->execute();
+                $sql = "DELETE FROM `migrations` WHERE `migrations` LIKE '%$result[0]%'";
+                $result = $db_connection->query($sql)->execute();
+                printf("Reverted the changes by one level.\n");
             }
         }
     }
