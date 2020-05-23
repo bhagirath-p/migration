@@ -37,6 +37,9 @@
                         $this->add_row($file_name_string[0]);
                     }
                 break;
+                case  'revert':
+                    $this->revert_to();
+                break;
             }
           
         }
